@@ -227,6 +227,11 @@ namespace leveldb {
                 &Table::BlockReader, const_cast<Table *>(this), options);
     }
 
+    bool Table::ValueInTable(const std::string v) {
+        return rep_->filter->ValueMayMatch(v);
+
+    }
+
     // TableCache::Get() 调用
     Status Table::InternalGet(const ReadOptions &options, const Slice &k,
                               void *arg,
@@ -236,7 +241,7 @@ namespace leveldb {
         iiter->Seek(k);
         if (iiter->Valid()) {
             Slice handle_value = iiter->value();
-            FilterBlockReader *filter = rep_->filter;
+            FilterBlockReader *filter = nullptr;
             BlockHandle handle;
             if (filter != nullptr &&
                 handle.DecodeFrom(&handle_value).ok() &&

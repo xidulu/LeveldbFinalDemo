@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <string>
+#include <iostream>
 
 #include "leveldb/comparator.h"
 #include "leveldb/slice.h"
@@ -16,6 +17,30 @@ namespace leveldb {
     Comparator::~Comparator() {}
 
     namespace {
+
+        class MyComparatorImpl : public Comparator {
+        public:
+            MyComparatorImpl() {}
+
+            virtual const char* Name() const { return "test.NumberComparator"; }
+            virtual int Compare(const Slice& a, const Slice& b) const {
+                return ToNumber(a) - ToNumber(b);
+            }
+            virtual void FindShortestSeparator(std::string* s, const Slice& l) const {
+                ToNumber(*s);     // Check format
+                ToNumber(l);      // Check format
+            }
+            virtual void FindShortSuccessor(std::string* key) const {
+                ToNumber(*key);   // Check format
+            }
+        private:
+            static int ToNumber(const Slice& x) {
+                // Check that there are no extra characters.
+
+                return std::stoi(x.ToString());
+            }
+        };
+
         class BytewiseComparatorImpl : public Comparator {
         public:
             BytewiseComparatorImpl() {}
@@ -77,6 +102,11 @@ namespace leveldb {
             }
         };
     }  // namespace
+
+    const Comparator *MyComparator() {
+        static NoDestructor<MyComparatorImpl> singleton;
+        return singleton.get();
+    }
 
     const Comparator *BytewiseComparator() {
         static NoDestructor<BytewiseComparatorImpl> singleton;

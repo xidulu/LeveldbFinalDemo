@@ -58,6 +58,7 @@ namespace leveldb {
         // E.g., the approximate offset of the last key in the table will
         // be close to the file length.
         uint64_t ApproximateOffsetOf(const Slice &key) const;
+        bool ValueInTable(const std::string);
 
     private:
         struct Rep;

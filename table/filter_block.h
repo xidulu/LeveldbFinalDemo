@@ -77,6 +77,7 @@ namespace leveldb {
         // REQUIRES: "contents" and *policy must stay live while *this is live.
         FilterBlockReader(const FilterPolicy *policy, const Slice &contents);
         bool KeyMayMatch(uint64_t block_offset, const Slice &key);
+        bool ValueMayMatch(const Slice &value);
 
     private:
         const FilterPolicy *policy_;

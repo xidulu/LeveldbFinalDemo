@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/read_sst.dir/test/read_sst.cc.o  -o read_sst 

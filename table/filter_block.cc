@@ -93,6 +93,22 @@ namespace leveldb {
         num_ = (n - 5 - last_word) / 4;
     }
 
+    bool FilterBlockReader::ValueMayMatch(const Slice &value) {
+        for (size_t i = 0; i < num_; i++) {
+            uint32_t start = DecodeFixed32(offset_ + i*4);
+            uint32_t limit = DecodeFixed32(offset_ + i*4 + 4);
+            if (start <= limit && limit <= static_cast<size_t>(offset_ - data_)) {
+                Slice filter = Slice(data_ + start, limit - start);
+                if(policy_->KeyMayMatch(value, filter))
+                    return true;
+            } else if (start == limit) {
+// Empty filters do not match any keys
+                continue;
+            }
+        }
+        return false;
+    }
+
     bool FilterBlockReader::KeyMayMatch(uint64_t block_offset, const Slice &key) {
         uint64_t index = block_offset >> base_lg_;
         if (index < num_) {

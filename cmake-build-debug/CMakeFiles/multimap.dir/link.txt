@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/multimap.dir/test/multimap.cc.o  -o multimap 

@@ -72,6 +72,7 @@ namespace leveldb {
 // ordering.  The result remains the property of this module and
 // must not be deleted.
     LEVELDB_EXPORT const Comparator *BytewiseComparator();
+    LEVELDB_EXPORT const Comparator *MyComparator();
 
 }  // namespace leveldb
 

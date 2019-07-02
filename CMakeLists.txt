@@ -297,6 +297,7 @@ add_executable(FinalDemoTest
         #        util/windows_logger.h
         #        db/db_bench.cc
         test/FinalDemoTest.cc
+#        test/Util.cc
         )
 #add_executable(db_bench db/db_bench.cc)
 #add_executable(mytest mytest.cpp)
@@ -316,17 +317,3 @@ target_link_libraries(test_read_sst Threads::Threads)
 #        )
 target_link_libraries(FinalDemoTest Threads::Threads)
 
-add_executable(multimap
-        "${PROJECT_SOURCE_DIR}/test/multimap.cc"
-        )
-target_link_libraries(multimap leveldb)
-
-add_executable(read_sst
-        "${PROJECT_SOURCE_DIR}/test/read_sst.cc"
-        )
-target_link_libraries(read_sst leveldb)
-
-add_executable(sstMaxMin
-        "${PROJECT_SOURCE_DIR}/test/sstMaxMin.cc"
-        )
-target_link_libraries(sstMaxMin leveldb)

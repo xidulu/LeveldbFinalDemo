@@ -80,6 +80,8 @@ namespace leveldb {
         //   >  0 iff "*this" >  "b"
         int compare(const Slice &b) const;
 
+        int value_compare(const Slice &b) const;
+
         // Return true iff "x" is a prefix of "*this"
         bool starts_with(const Slice &x) const {
             return ((size_ >= x.size_) &&
@@ -108,6 +110,12 @@ namespace leveldb {
             else if (size_ > b.size_) r = +1;
         }
         return r;
+    }
+
+    inline int Slice::value_compare(const Slice &b) const {
+        std::string lhs = ToString();
+        std::string rhs = b.ToString();
+        return (std::stoi(lhs) < std::stoi(rhs));
     }
 
 }  // namespace leveldb

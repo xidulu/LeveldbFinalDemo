@@ -93,7 +93,7 @@ namespace leveldb {
         // Also, a larger write buffer will result in a longer recovery time
         // the next time the database is opened.
         // 缓冲区大小 4MB
-        size_t write_buffer_size = 4 * 1024 * 1024;
+        size_t write_buffer_size = 1 * 128 * 512;
 
         // Number of open files that can be used by the DB.  You may need to
         // increase this if your database has a large working set (budget

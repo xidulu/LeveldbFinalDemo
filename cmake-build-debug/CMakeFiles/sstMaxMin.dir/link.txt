@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/sstMaxMin.dir/test/sstMaxMin.cc.o  -o sstMaxMin 
